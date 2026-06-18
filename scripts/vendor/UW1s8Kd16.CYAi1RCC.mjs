@@ -1,4 +1,597 @@
-import{t as e}from"./rolldown-runtime.Bawp8BQ-.mjs";import{C as t,E as n,F as r,L as i,M as a,O as o,c as s,g as c,j as l,k as u,l as d,o as f,s as p,v as m}from"./react.BC_N61as.mjs";import{S as h,a as g,r as _,t as v}from"./motion.CbDrufkU.mjs";import{$ as y,C as b,D as ee,H as x,O as S,a as C,at as te,f as w,ft as ne,pt as re,w as T,x as E}from"./framer.Dbwxx7XS.mjs";function D(e,t,n){return Math.max(e,Math.min(t,n))}var O,k,A,j,M,N,ie=e((()=>{r(),O=class{advance(e){if(!this.isRunning)return;let t=!1;if(this.lerp)this.value=function(e,t,n,r){return function(e,t,n){return(1-n)*e+n*t}(e,t,1-Math.exp(-n*r))}(this.value,this.to,60*this.lerp,e),Math.round(this.value)===this.to&&(this.value=this.to,t=!0);else{this.currentTime+=e;let n=D(0,this.currentTime/this.duration,1);t=n>=1;let r=t?1:this.easing(n);this.value=this.from+(this.to-this.from)*r}t&&this.stop(),this.onUpdate?.(this.value,t)}stop(){this.isRunning=!1}fromTo(e,t,{lerp:n=.1,duration:r=1,easing:i=(e=>e),onStart:a,onUpdate:o}){this.from=this.value=e,this.to=t,this.lerp=n,this.duration=r,this.easing=i,this.currentTime=0,this.isRunning=!0,a?.(),this.onUpdate=o}},k=class{constructor({wrapper:e,content:t,autoResize:n=!0,debounce:r=250}={}){this.wrapper=e,this.content=t,n&&(this.debouncedResize=function(e,t){let n;return function(){let r=arguments,i=this;clearTimeout(n),n=setTimeout((function(){e.apply(i,r)}),t)}}(this.resize,r),this.wrapper===i?i.addEventListener(`resize`,this.debouncedResize,!1):(this.wrapperResizeObserver=new ResizeObserver(this.debouncedResize),this.wrapperResizeObserver.observe(this.wrapper)),this.contentResizeObserver=new ResizeObserver(this.debouncedResize),this.contentResizeObserver.observe(this.content)),this.resize()}destroy(){this.wrapperResizeObserver?.disconnect(),this.contentResizeObserver?.disconnect(),i.removeEventListener(`resize`,this.debouncedResize,!1)}resize=()=>{this.onWrapperResize(),this.onContentResize()};onWrapperResize=()=>{this.wrapper===i?(this.width=i.innerWidth,this.height=i.innerHeight):(this.width=this.wrapper.clientWidth,this.height=this.wrapper.clientHeight)};onContentResize=()=>{this.wrapper===i?(this.scrollHeight=this.content.scrollHeight,this.scrollWidth=this.content.scrollWidth):(this.scrollHeight=this.wrapper.scrollHeight,this.scrollWidth=this.wrapper.scrollWidth)};get limit(){return{x:this.scrollWidth-this.width,y:this.scrollHeight-this.height}}},A=class{constructor(){this.events={}}emit(e,...t){let n=this.events[e]||[];for(let e=0,r=n.length;e<r;e++)n[e](...t)}on(e,t){return this.events[e]?.push(t)||(this.events[e]=[t]),()=>{this.events[e]=this.events[e]?.filter((e=>t!==e))}}off(e,t){this.events[e]=this.events[e]?.filter((e=>t!==e))}destroy(){this.events={}}},j=100/6,M=class{constructor(e,{wheelMultiplier:t=1,touchMultiplier:n=1}){this.element=e,this.wheelMultiplier=t,this.touchMultiplier=n,this.touchStart={x:null,y:null},this.emitter=new A,i.addEventListener(`resize`,this.onWindowResize,!1),this.onWindowResize(),this.element.addEventListener(`wheel`,this.onWheel,{passive:!1}),this.element.addEventListener(`touchstart`,this.onTouchStart,{passive:!1}),this.element.addEventListener(`touchmove`,this.onTouchMove,{passive:!1}),this.element.addEventListener(`touchend`,this.onTouchEnd,{passive:!1})}on(e,t){return this.emitter.on(e,t)}destroy(){this.emitter.destroy(),i.removeEventListener(`resize`,this.onWindowResize,!1),this.element.removeEventListener(`wheel`,this.onWheel,{passive:!1}),this.element.removeEventListener(`touchstart`,this.onTouchStart,{passive:!1}),this.element.removeEventListener(`touchmove`,this.onTouchMove,{passive:!1}),this.element.removeEventListener(`touchend`,this.onTouchEnd,{passive:!1})}onTouchStart=e=>{let{clientX:t,clientY:n}=e.targetTouches?e.targetTouches[0]:e;this.touchStart.x=t,this.touchStart.y=n,this.lastDelta={x:0,y:0},this.emitter.emit(`scroll`,{deltaX:0,deltaY:0,event:e})};onTouchMove=e=>{let{clientX:t,clientY:n}=e.targetTouches?e.targetTouches[0]:e,r=-(t-this.touchStart.x)*this.touchMultiplier,i=-(n-this.touchStart.y)*this.touchMultiplier;this.touchStart.x=t,this.touchStart.y=n,this.lastDelta={x:r,y:i},this.emitter.emit(`scroll`,{deltaX:r,deltaY:i,event:e})};onTouchEnd=e=>{this.emitter.emit(`scroll`,{deltaX:this.lastDelta.x,deltaY:this.lastDelta.y,event:e})};onWheel=e=>{let{deltaX:t,deltaY:n,deltaMode:r}=e;t*=r===1?j:r===2?this.windowWidth:1,n*=r===1?j:r===2?this.windowHeight:1,t*=this.wheelMultiplier,n*=this.wheelMultiplier,this.emitter.emit(`scroll`,{deltaX:t,deltaY:n,event:e})};onWindowResize=()=>{this.windowWidth=i.innerWidth,this.windowHeight=i.innerHeight}},N=class{constructor({wrapper:e=i,content:t=document.documentElement,wheelEventsTarget:n=e,eventsTarget:r=n,smoothWheel:a=!0,syncTouch:o=!1,syncTouchLerp:s=.075,touchInertiaMultiplier:c=35,duration:l,easing:u=(e=>Math.min(1,1.001-2**(-10*e))),lerp:d=!l&&.1,infinite:f=!1,orientation:p=`vertical`,gestureOrientation:m=`vertical`,touchMultiplier:h=1,wheelMultiplier:g=1,autoResize:_=!0,prevent:v=!1,__experimental__naiveDimensions:y=!1}={}){this.__isScrolling=!1,this.__isStopped=!1,this.__isLocked=!1,this.onVirtualScroll=({deltaX:e,deltaY:t,event:n})=>{if(n.ctrlKey)return;let r=n.type.includes(`touch`),i=n.type.includes(`wheel`);if(this.isTouching=n.type===`touchstart`||n.type===`touchmove`,this.options.syncTouch&&r&&n.type===`touchstart`&&!this.isStopped&&!this.isLocked)return void this.reset();let a=e===0&&t===0,o=this.options.gestureOrientation===`vertical`&&t===0||this.options.gestureOrientation===`horizontal`&&e===0;if(a||o)return;let s=n.composedPath();s=s.slice(0,s.indexOf(this.rootElement));let c=this.options.prevent;if(s.find((e=>(typeof c==`function`?c?.(e):c)||e.hasAttribute?.call(e,`data-lenis-prevent`)||r&&e.hasAttribute?.call(e,`data-lenis-prevent-touch`)||i&&e.hasAttribute?.call(e,`data-lenis-prevent-wheel`)||e.classList?.contains(`lenis`)&&!e.classList?.contains(`lenis-stopped`))))return;if(this.isStopped||this.isLocked)return void n.preventDefault();if(!(this.options.syncTouch&&r||this.options.smoothWheel&&i))return this.isScrolling=`native`,void this.animate.stop();n.preventDefault();let l=t;this.options.gestureOrientation===`both`?l=Math.abs(t)>Math.abs(e)?t:e:this.options.gestureOrientation===`horizontal`&&(l=e);let u=r&&this.options.syncTouch,d=r&&n.type===`touchend`&&Math.abs(l)>5;d&&(l=this.velocity*this.options.touchInertiaMultiplier),this.scrollTo(this.targetScroll+l,Object.assign({programmatic:!1},u?{lerp:d?this.options.syncTouchLerp:1}:{lerp:this.options.lerp,duration:this.options.duration,easing:this.options.easing}))},this.onNativeScroll=()=>{if(clearTimeout(this.__resetVelocityTimeout),delete this.__resetVelocityTimeout,this.__preventNextNativeScrollEvent)delete this.__preventNextNativeScrollEvent;else if(!1===this.isScrolling||this.isScrolling===`native`){let e=this.animatedScroll;this.animatedScroll=this.targetScroll=this.actualScroll,this.lastVelocity=this.velocity,this.velocity=this.animatedScroll-e,this.direction=Math.sign(this.animatedScroll-e),this.isScrolling=`native`,this.emit(),this.velocity!==0&&(this.__resetVelocityTimeout=setTimeout((()=>{this.lastVelocity=this.velocity,this.velocity=0,this.isScrolling=!1,this.emit()}),400))}},i.lenisVersion=`1.1.2`,e!==document.documentElement&&e!==document.body||(e=i),this.options={wrapper:e,content:t,wheelEventsTarget:n,eventsTarget:r,smoothWheel:a,syncTouch:o,syncTouchLerp:s,touchInertiaMultiplier:c,duration:l,easing:u,lerp:d,infinite:f,gestureOrientation:m,orientation:p,touchMultiplier:h,wheelMultiplier:g,autoResize:_,prevent:v,__experimental__naiveDimensions:y},this.animate=new O,this.emitter=new A,this.dimensions=new k({wrapper:e,content:t,autoResize:_}),this.updateClassName(),this.userData={},this.time=0,this.velocity=this.lastVelocity=0,this.isLocked=!1,this.isStopped=!1,this.isScrolling=!1,this.targetScroll=this.animatedScroll=this.actualScroll,this.options.wrapper.addEventListener(`scroll`,this.onNativeScroll,!1),this.virtualScroll=new M(r,{touchMultiplier:h,wheelMultiplier:g}),this.virtualScroll.on(`scroll`,this.onVirtualScroll)}destroy(){this.emitter.destroy(),this.options.wrapper.removeEventListener(`scroll`,this.onNativeScroll,!1),this.virtualScroll.destroy(),this.dimensions.destroy(),this.cleanUpClassName()}on(e,t){return this.emitter.on(e,t)}off(e,t){return this.emitter.off(e,t)}setScroll(e){this.isHorizontal?this.rootElement.scrollLeft=e:this.rootElement.scrollTop=e}resize(){this.dimensions.resize()}emit({userData:e={}}={}){this.userData=e,this.emitter.emit(`scroll`,this),this.userData={}}reset(){this.isLocked=!1,this.isScrolling=!1,this.animatedScroll=this.targetScroll=this.actualScroll,this.lastVelocity=this.velocity=0,this.animate.stop()}start(){this.isStopped&&(this.isStopped=!1,this.reset())}stop(){this.isStopped||(this.isStopped=!0,this.animate.stop(),this.reset())}raf(e){let t=e-(this.time||e);this.time=e,this.animate.advance(.001*t)}scrollTo(e,{offset:t=0,immediate:n=!1,lock:r=!1,duration:a=this.options.duration,easing:o=this.options.easing,lerp:s=!a&&this.options.lerp,onStart:c,onComplete:l,force:u=!1,programmatic:d=!0,userData:f={}}={}){if(!this.isStopped&&!this.isLocked||u){if([`top`,`left`,`start`].includes(e))e=0;else if([`bottom`,`right`,`end`].includes(e))e=this.limit;else{let n;if(typeof e==`string`?n=document.querySelector(e):e!=null&&e.nodeType&&(n=e),n){if(this.options.wrapper!==i){let e=this.options.wrapper.getBoundingClientRect();t-=this.isHorizontal?e.left:e.top}let r=n.getBoundingClientRect();e=(this.isHorizontal?r.left:r.top)+this.animatedScroll}}if(typeof e==`number`){if(e+=t,e=Math.round(e),this.options.infinite?d&&(this.targetScroll=this.animatedScroll=this.scroll):e=D(0,e,this.limit),n)return this.animatedScroll=this.targetScroll=e,this.setScroll(this.scroll),this.reset(),void(l==null||l(this));e!==this.targetScroll&&(d||(this.targetScroll=e),this.animate.fromTo(this.animatedScroll,e,{duration:a,easing:o,lerp:s,onStart:()=>{r&&(this.isLocked=!0),this.isScrolling=`smooth`,c?.(this)},onUpdate:(e,t)=>{this.isScrolling=`smooth`,this.lastVelocity=this.velocity,this.velocity=e-this.animatedScroll,this.direction=Math.sign(this.velocity),this.animatedScroll=e,this.setScroll(this.scroll),d&&(this.targetScroll=e),t||this.emit({userData:f}),t&&(this.reset(),this.emit({userData:f}),l?.(this),this.__preventNextNativeScrollEvent=!0)}}))}}}get rootElement(){return this.options.wrapper===i?document.documentElement:this.options.wrapper}get limit(){return this.options.__experimental__naiveDimensions?this.isHorizontal?this.rootElement.scrollWidth-this.rootElement.clientWidth:this.rootElement.scrollHeight-this.rootElement.clientHeight:this.dimensions.limit[this.isHorizontal?`x`:`y`]}get isHorizontal(){return this.options.orientation===`horizontal`}get actualScroll(){return this.isHorizontal?this.rootElement.scrollLeft:this.rootElement.scrollTop}get scroll(){return this.options.infinite?function(e,t){return(e%t+t)%t}(this.animatedScroll,this.limit):this.animatedScroll}get progress(){return this.limit===0?1:this.scroll/this.limit}get isScrolling(){return this.__isScrolling}set isScrolling(e){this.__isScrolling!==e&&(this.__isScrolling=e,this.updateClassName())}get isStopped(){return this.__isStopped}set isStopped(e){this.__isStopped!==e&&(this.__isStopped=e,this.updateClassName())}get isLocked(){return this.__isLocked}set isLocked(e){this.__isLocked!==e&&(this.__isLocked=e,this.updateClassName())}get isSmooth(){return this.isScrolling===`smooth`}get className(){let e=`lenis`;return this.isStopped&&(e+=` lenis-stopped`),this.isLocked&&(e+=` lenis-locked`),this.isScrolling&&(e+=` lenis-scrolling`),this.isScrolling===`smooth`&&(e+=` lenis-smooth`),e}updateClassName(){this.cleanUpClassName(),this.rootElement.className=`${this.rootElement.className} ${this.className}`.trim()}cleanUpClassName(){this.rootElement.className=this.rootElement.className.replace(/lenis(-\w+)?/g,``).trim()}}}));function P(e){let{intensity:t}=e,r=n(null);return l(()=>{r.current&&r.current.scrollTo(0,{immediate:!0})},[r]),l(()=>{let e=document.getElementById(`overlay`);if(e){let t=()=>{i.getComputedStyle(document.documentElement).overflow===`hidden`&&e.setAttribute(`data-lenis-prevent`,`true`)},n=new MutationObserver(e=>{for(let n of e)n.type===`attributes`&&n.attributeName===`style`&&t()});return n.observe(document.documentElement,{attributes:!0,attributeFilter:[`style`]}),t(),()=>{n.disconnect()}}},[]),l(()=>{let e=document.getElementsByTagName(`*`);for(let t=0;t<e.length;t++){let n=e[t];i.getComputedStyle(n).getPropertyValue(`overflow`)===`auto`&&n.setAttribute(`data-lenis-prevent`,`true`)}},[]),l(()=>{r.current=new N({duration:t/10});let e=t=>{r.current&&(r.current.raf(t),requestAnimationFrame(e))};return requestAnimationFrame(e),()=>{r.current&&=(r.current.destroy(),null)}},[]),l(()=>{let e=document.createElement(`style`);return e.textContent=`
+import { t as e } from "./rolldown-runtime.Bawp8BQ-.mjs";
+import {
+  C as t,
+  E as n,
+  F as r,
+  L as i,
+  M as a,
+  O as o,
+  c as s,
+  g as c,
+  j as l,
+  k as u,
+  l as d,
+  o as f,
+  s as p,
+  v as m,
+} from "./react.BC_N61as.mjs";
+import { S as h, a as g, r as _, t as v } from "./motion.CbDrufkU.mjs";
+import {
+  $ as y,
+  C as b,
+  D as ee,
+  H as x,
+  O as S,
+  a as C,
+  at as te,
+  f as w,
+  ft as ne,
+  pt as re,
+  w as T,
+  x as E,
+} from "./framer.Dbwxx7XS.mjs";
+function D(e, t, n) {
+  return Math.max(e, Math.min(t, n));
+}
+var O,
+  k,
+  A,
+  j,
+  M,
+  N,
+  ie = e(() => {
+    (r(),
+      (O = class {
+        advance(e) {
+          if (!this.isRunning) return;
+          let t = !1;
+          if (this.lerp)
+            ((this.value = (function (e, t, n, r) {
+              return (function (e, t, n) {
+                return (1 - n) * e + n * t;
+              })(e, t, 1 - Math.exp(-n * r));
+            })(this.value, this.to, 60 * this.lerp, e)),
+              Math.round(this.value) === this.to && ((this.value = this.to), (t = !0)));
+          else {
+            this.currentTime += e;
+            let n = D(0, this.currentTime / this.duration, 1);
+            t = n >= 1;
+            let r = t ? 1 : this.easing(n);
+            this.value = this.from + (this.to - this.from) * r;
+          }
+          (t && this.stop(), this.onUpdate?.(this.value, t));
+        }
+        stop() {
+          this.isRunning = !1;
+        }
+        fromTo(
+          e,
+          t,
+          { lerp: n = 0.1, duration: r = 1, easing: i = (e) => e, onStart: a, onUpdate: o }
+        ) {
+          ((this.from = this.value = e),
+            (this.to = t),
+            (this.lerp = n),
+            (this.duration = r),
+            (this.easing = i),
+            (this.currentTime = 0),
+            (this.isRunning = !0),
+            a?.(),
+            (this.onUpdate = o));
+        }
+      }),
+      (k = class {
+        constructor({ wrapper: e, content: t, autoResize: n = !0, debounce: r = 250 } = {}) {
+          ((this.wrapper = e),
+            (this.content = t),
+            n &&
+              ((this.debouncedResize = (function (e, t) {
+                let n;
+                return function () {
+                  let r = arguments,
+                    i = this;
+                  (clearTimeout(n),
+                    (n = setTimeout(function () {
+                      e.apply(i, r);
+                    }, t)));
+                };
+              })(this.resize, r)),
+              this.wrapper === i
+                ? i.addEventListener(`resize`, this.debouncedResize, !1)
+                : ((this.wrapperResizeObserver = new ResizeObserver(this.debouncedResize)),
+                  this.wrapperResizeObserver.observe(this.wrapper)),
+              (this.contentResizeObserver = new ResizeObserver(this.debouncedResize)),
+              this.contentResizeObserver.observe(this.content)),
+            this.resize());
+        }
+        destroy() {
+          (this.wrapperResizeObserver?.disconnect(),
+            this.contentResizeObserver?.disconnect(),
+            i.removeEventListener(`resize`, this.debouncedResize, !1));
+        }
+        resize = () => {
+          (this.onWrapperResize(), this.onContentResize());
+        };
+        onWrapperResize = () => {
+          this.wrapper === i
+            ? ((this.width = i.innerWidth), (this.height = i.innerHeight))
+            : ((this.width = this.wrapper.clientWidth), (this.height = this.wrapper.clientHeight));
+        };
+        onContentResize = () => {
+          this.wrapper === i
+            ? ((this.scrollHeight = this.content.scrollHeight),
+              (this.scrollWidth = this.content.scrollWidth))
+            : ((this.scrollHeight = this.wrapper.scrollHeight),
+              (this.scrollWidth = this.wrapper.scrollWidth));
+        };
+        get limit() {
+          return { x: this.scrollWidth - this.width, y: this.scrollHeight - this.height };
+        }
+      }),
+      (A = class {
+        constructor() {
+          this.events = {};
+        }
+        emit(e, ...t) {
+          let n = this.events[e] || [];
+          for (let e = 0, r = n.length; e < r; e++) n[e](...t);
+        }
+        on(e, t) {
+          return (
+            this.events[e]?.push(t) || (this.events[e] = [t]),
+            () => {
+              this.events[e] = this.events[e]?.filter((e) => t !== e);
+            }
+          );
+        }
+        off(e, t) {
+          this.events[e] = this.events[e]?.filter((e) => t !== e);
+        }
+        destroy() {
+          this.events = {};
+        }
+      }),
+      (j = 100 / 6),
+      (M = class {
+        constructor(e, { wheelMultiplier: t = 1, touchMultiplier: n = 1 }) {
+          ((this.element = e),
+            (this.wheelMultiplier = t),
+            (this.touchMultiplier = n),
+            (this.touchStart = { x: null, y: null }),
+            (this.emitter = new A()),
+            i.addEventListener(`resize`, this.onWindowResize, !1),
+            this.onWindowResize(),
+            this.element.addEventListener(`wheel`, this.onWheel, { passive: !1 }),
+            this.element.addEventListener(`touchstart`, this.onTouchStart, { passive: !1 }),
+            this.element.addEventListener(`touchmove`, this.onTouchMove, { passive: !1 }),
+            this.element.addEventListener(`touchend`, this.onTouchEnd, { passive: !1 }));
+        }
+        on(e, t) {
+          return this.emitter.on(e, t);
+        }
+        destroy() {
+          (this.emitter.destroy(),
+            i.removeEventListener(`resize`, this.onWindowResize, !1),
+            this.element.removeEventListener(`wheel`, this.onWheel, { passive: !1 }),
+            this.element.removeEventListener(`touchstart`, this.onTouchStart, { passive: !1 }),
+            this.element.removeEventListener(`touchmove`, this.onTouchMove, { passive: !1 }),
+            this.element.removeEventListener(`touchend`, this.onTouchEnd, { passive: !1 }));
+        }
+        onTouchStart = (e) => {
+          let { clientX: t, clientY: n } = e.targetTouches ? e.targetTouches[0] : e;
+          ((this.touchStart.x = t),
+            (this.touchStart.y = n),
+            (this.lastDelta = { x: 0, y: 0 }),
+            this.emitter.emit(`scroll`, { deltaX: 0, deltaY: 0, event: e }));
+        };
+        onTouchMove = (e) => {
+          let { clientX: t, clientY: n } = e.targetTouches ? e.targetTouches[0] : e,
+            r = -(t - this.touchStart.x) * this.touchMultiplier,
+            i = -(n - this.touchStart.y) * this.touchMultiplier;
+          ((this.touchStart.x = t),
+            (this.touchStart.y = n),
+            (this.lastDelta = { x: r, y: i }),
+            this.emitter.emit(`scroll`, { deltaX: r, deltaY: i, event: e }));
+        };
+        onTouchEnd = (e) => {
+          this.emitter.emit(`scroll`, {
+            deltaX: this.lastDelta.x,
+            deltaY: this.lastDelta.y,
+            event: e,
+          });
+        };
+        onWheel = (e) => {
+          let { deltaX: t, deltaY: n, deltaMode: r } = e;
+          ((t *= r === 1 ? j : r === 2 ? this.windowWidth : 1),
+            (n *= r === 1 ? j : r === 2 ? this.windowHeight : 1),
+            (t *= this.wheelMultiplier),
+            (n *= this.wheelMultiplier),
+            this.emitter.emit(`scroll`, { deltaX: t, deltaY: n, event: e }));
+        };
+        onWindowResize = () => {
+          ((this.windowWidth = i.innerWidth), (this.windowHeight = i.innerHeight));
+        };
+      }),
+      (N = class {
+        constructor({
+          wrapper: e = i,
+          content: t = document.documentElement,
+          wheelEventsTarget: n = e,
+          eventsTarget: r = n,
+          smoothWheel: a = !0,
+          syncTouch: o = !1,
+          syncTouchLerp: s = 0.075,
+          touchInertiaMultiplier: c = 35,
+          duration: l,
+          easing: u = (e) => Math.min(1, 1.001 - 2 ** (-10 * e)),
+          lerp: d = !l && 0.1,
+          infinite: f = !1,
+          orientation: p = `vertical`,
+          gestureOrientation: m = `vertical`,
+          touchMultiplier: h = 1,
+          wheelMultiplier: g = 1,
+          autoResize: _ = !0,
+          prevent: v = !1,
+          __experimental__naiveDimensions: y = !1,
+        } = {}) {
+          ((this.__isScrolling = !1),
+            (this.__isStopped = !1),
+            (this.__isLocked = !1),
+            (this.onVirtualScroll = ({ deltaX: e, deltaY: t, event: n }) => {
+              if (n.ctrlKey) return;
+              let r = n.type.includes(`touch`),
+                i = n.type.includes(`wheel`);
+              if (
+                ((this.isTouching = n.type === `touchstart` || n.type === `touchmove`),
+                this.options.syncTouch &&
+                  r &&
+                  n.type === `touchstart` &&
+                  !this.isStopped &&
+                  !this.isLocked)
+              )
+                return void this.reset();
+              let a = e === 0 && t === 0,
+                o =
+                  (this.options.gestureOrientation === `vertical` && t === 0) ||
+                  (this.options.gestureOrientation === `horizontal` && e === 0);
+              if (a || o) return;
+              let s = n.composedPath();
+              s = s.slice(0, s.indexOf(this.rootElement));
+              let c = this.options.prevent;
+              if (
+                s.find(
+                  (e) =>
+                    (typeof c == `function` ? c?.(e) : c) ||
+                    e.hasAttribute?.call(e, `data-lenis-prevent`) ||
+                    (r && e.hasAttribute?.call(e, `data-lenis-prevent-touch`)) ||
+                    (i && e.hasAttribute?.call(e, `data-lenis-prevent-wheel`)) ||
+                    (e.classList?.contains(`lenis`) && !e.classList?.contains(`lenis-stopped`))
+                )
+              )
+                return;
+              if (this.isStopped || this.isLocked) return void n.preventDefault();
+              if (!((this.options.syncTouch && r) || (this.options.smoothWheel && i)))
+                return ((this.isScrolling = `native`), void this.animate.stop());
+              n.preventDefault();
+              let l = t;
+              this.options.gestureOrientation === `both`
+                ? (l = Math.abs(t) > Math.abs(e) ? t : e)
+                : this.options.gestureOrientation === `horizontal` && (l = e);
+              let u = r && this.options.syncTouch,
+                d = r && n.type === `touchend` && Math.abs(l) > 5;
+              (d && (l = this.velocity * this.options.touchInertiaMultiplier),
+                this.scrollTo(
+                  this.targetScroll + l,
+                  Object.assign(
+                    { programmatic: !1 },
+                    u
+                      ? { lerp: d ? this.options.syncTouchLerp : 1 }
+                      : {
+                          lerp: this.options.lerp,
+                          duration: this.options.duration,
+                          easing: this.options.easing,
+                        }
+                  )
+                ));
+            }),
+            (this.onNativeScroll = () => {
+              if (
+                (clearTimeout(this.__resetVelocityTimeout),
+                delete this.__resetVelocityTimeout,
+                this.__preventNextNativeScrollEvent)
+              )
+                delete this.__preventNextNativeScrollEvent;
+              else if (!1 === this.isScrolling || this.isScrolling === `native`) {
+                let e = this.animatedScroll;
+                ((this.animatedScroll = this.targetScroll = this.actualScroll),
+                  (this.lastVelocity = this.velocity),
+                  (this.velocity = this.animatedScroll - e),
+                  (this.direction = Math.sign(this.animatedScroll - e)),
+                  (this.isScrolling = `native`),
+                  this.emit(),
+                  this.velocity !== 0 &&
+                    (this.__resetVelocityTimeout = setTimeout(() => {
+                      ((this.lastVelocity = this.velocity),
+                        (this.velocity = 0),
+                        (this.isScrolling = !1),
+                        this.emit());
+                    }, 400)));
+              }
+            }),
+            (i.lenisVersion = `1.1.2`),
+            (e !== document.documentElement && e !== document.body) || (e = i),
+            (this.options = {
+              wrapper: e,
+              content: t,
+              wheelEventsTarget: n,
+              eventsTarget: r,
+              smoothWheel: a,
+              syncTouch: o,
+              syncTouchLerp: s,
+              touchInertiaMultiplier: c,
+              duration: l,
+              easing: u,
+              lerp: d,
+              infinite: f,
+              gestureOrientation: m,
+              orientation: p,
+              touchMultiplier: h,
+              wheelMultiplier: g,
+              autoResize: _,
+              prevent: v,
+              __experimental__naiveDimensions: y,
+            }),
+            (this.animate = new O()),
+            (this.emitter = new A()),
+            (this.dimensions = new k({ wrapper: e, content: t, autoResize: _ })),
+            this.updateClassName(),
+            (this.userData = {}),
+            (this.time = 0),
+            (this.velocity = this.lastVelocity = 0),
+            (this.isLocked = !1),
+            (this.isStopped = !1),
+            (this.isScrolling = !1),
+            (this.targetScroll = this.animatedScroll = this.actualScroll),
+            this.options.wrapper.addEventListener(`scroll`, this.onNativeScroll, !1),
+            (this.virtualScroll = new M(r, { touchMultiplier: h, wheelMultiplier: g })),
+            this.virtualScroll.on(`scroll`, this.onVirtualScroll));
+        }
+        destroy() {
+          (this.emitter.destroy(),
+            this.options.wrapper.removeEventListener(`scroll`, this.onNativeScroll, !1),
+            this.virtualScroll.destroy(),
+            this.dimensions.destroy(),
+            this.cleanUpClassName());
+        }
+        on(e, t) {
+          return this.emitter.on(e, t);
+        }
+        off(e, t) {
+          return this.emitter.off(e, t);
+        }
+        setScroll(e) {
+          this.isHorizontal ? (this.rootElement.scrollLeft = e) : (this.rootElement.scrollTop = e);
+        }
+        resize() {
+          this.dimensions.resize();
+        }
+        emit({ userData: e = {} } = {}) {
+          ((this.userData = e), this.emitter.emit(`scroll`, this), (this.userData = {}));
+        }
+        reset() {
+          ((this.isLocked = !1),
+            (this.isScrolling = !1),
+            (this.animatedScroll = this.targetScroll = this.actualScroll),
+            (this.lastVelocity = this.velocity = 0),
+            this.animate.stop());
+        }
+        start() {
+          this.isStopped && ((this.isStopped = !1), this.reset());
+        }
+        stop() {
+          this.isStopped || ((this.isStopped = !0), this.animate.stop(), this.reset());
+        }
+        raf(e) {
+          let t = e - (this.time || e);
+          ((this.time = e), this.animate.advance(0.001 * t));
+        }
+        scrollTo(
+          e,
+          {
+            offset: t = 0,
+            immediate: n = !1,
+            lock: r = !1,
+            duration: a = this.options.duration,
+            easing: o = this.options.easing,
+            lerp: s = !a && this.options.lerp,
+            onStart: c,
+            onComplete: l,
+            force: u = !1,
+            programmatic: d = !0,
+            userData: f = {},
+          } = {}
+        ) {
+          if ((!this.isStopped && !this.isLocked) || u) {
+            if ([`top`, `left`, `start`].includes(e)) e = 0;
+            else if ([`bottom`, `right`, `end`].includes(e)) e = this.limit;
+            else {
+              let n;
+              if (
+                (typeof e == `string`
+                  ? (n = document.querySelector(e))
+                  : e != null && e.nodeType && (n = e),
+                n)
+              ) {
+                if (this.options.wrapper !== i) {
+                  let e = this.options.wrapper.getBoundingClientRect();
+                  t -= this.isHorizontal ? e.left : e.top;
+                }
+                let r = n.getBoundingClientRect();
+                e = (this.isHorizontal ? r.left : r.top) + this.animatedScroll;
+              }
+            }
+            if (typeof e == `number`) {
+              if (
+                ((e += t),
+                (e = Math.round(e)),
+                this.options.infinite
+                  ? d && (this.targetScroll = this.animatedScroll = this.scroll)
+                  : (e = D(0, e, this.limit)),
+                n)
+              )
+                return (
+                  (this.animatedScroll = this.targetScroll = e),
+                  this.setScroll(this.scroll),
+                  this.reset(),
+                  void (l == null || l(this))
+                );
+              e !== this.targetScroll &&
+                (d || (this.targetScroll = e),
+                this.animate.fromTo(this.animatedScroll, e, {
+                  duration: a,
+                  easing: o,
+                  lerp: s,
+                  onStart: () => {
+                    (r && (this.isLocked = !0), (this.isScrolling = `smooth`), c?.(this));
+                  },
+                  onUpdate: (e, t) => {
+                    ((this.isScrolling = `smooth`),
+                      (this.lastVelocity = this.velocity),
+                      (this.velocity = e - this.animatedScroll),
+                      (this.direction = Math.sign(this.velocity)),
+                      (this.animatedScroll = e),
+                      this.setScroll(this.scroll),
+                      d && (this.targetScroll = e),
+                      t || this.emit({ userData: f }),
+                      t &&
+                        (this.reset(),
+                        this.emit({ userData: f }),
+                        l?.(this),
+                        (this.__preventNextNativeScrollEvent = !0)));
+                  },
+                }));
+            }
+          }
+        }
+        get rootElement() {
+          return this.options.wrapper === i ? document.documentElement : this.options.wrapper;
+        }
+        get limit() {
+          return this.options.__experimental__naiveDimensions
+            ? this.isHorizontal
+              ? this.rootElement.scrollWidth - this.rootElement.clientWidth
+              : this.rootElement.scrollHeight - this.rootElement.clientHeight
+            : this.dimensions.limit[this.isHorizontal ? `x` : `y`];
+        }
+        get isHorizontal() {
+          return this.options.orientation === `horizontal`;
+        }
+        get actualScroll() {
+          return this.isHorizontal ? this.rootElement.scrollLeft : this.rootElement.scrollTop;
+        }
+        get scroll() {
+          return this.options.infinite
+            ? (function (e, t) {
+                return ((e % t) + t) % t;
+              })(this.animatedScroll, this.limit)
+            : this.animatedScroll;
+        }
+        get progress() {
+          return this.limit === 0 ? 1 : this.scroll / this.limit;
+        }
+        get isScrolling() {
+          return this.__isScrolling;
+        }
+        set isScrolling(e) {
+          this.__isScrolling !== e && ((this.__isScrolling = e), this.updateClassName());
+        }
+        get isStopped() {
+          return this.__isStopped;
+        }
+        set isStopped(e) {
+          this.__isStopped !== e && ((this.__isStopped = e), this.updateClassName());
+        }
+        get isLocked() {
+          return this.__isLocked;
+        }
+        set isLocked(e) {
+          this.__isLocked !== e && ((this.__isLocked = e), this.updateClassName());
+        }
+        get isSmooth() {
+          return this.isScrolling === `smooth`;
+        }
+        get className() {
+          let e = `lenis`;
+          return (
+            this.isStopped && (e += ` lenis-stopped`),
+            this.isLocked && (e += ` lenis-locked`),
+            this.isScrolling && (e += ` lenis-scrolling`),
+            this.isScrolling === `smooth` && (e += ` lenis-smooth`),
+            e
+          );
+        }
+        updateClassName() {
+          (this.cleanUpClassName(),
+            (this.rootElement.className =
+              `${this.rootElement.className} ${this.className}`.trim()));
+        }
+        cleanUpClassName() {
+          this.rootElement.className = this.rootElement.className
+            .replace(/lenis(-\w+)?/g, ``)
+            .trim();
+        }
+      }));
+  });
+function P(e) {
+  let { intensity: t } = e,
+    r = n(null);
+  return (
+    l(() => {
+      r.current && r.current.scrollTo(0, { immediate: !0 });
+    }, [r]),
+    l(() => {
+      let e = document.getElementById(`overlay`);
+      if (e) {
+        let t = () => {
+            i.getComputedStyle(document.documentElement).overflow === `hidden` &&
+              e.setAttribute(`data-lenis-prevent`, `true`);
+          },
+          n = new MutationObserver((e) => {
+            for (let n of e) n.type === `attributes` && n.attributeName === `style` && t();
+          });
+        return (
+          n.observe(document.documentElement, { attributes: !0, attributeFilter: [`style`] }),
+          t(),
+          () => {
+            n.disconnect();
+          }
+        );
+      }
+    }, []),
+    l(() => {
+      let e = document.getElementsByTagName(`*`);
+      for (let t = 0; t < e.length; t++) {
+        let n = e[t];
+        i.getComputedStyle(n).getPropertyValue(`overflow`) === `auto` &&
+          n.setAttribute(`data-lenis-prevent`, `true`);
+      }
+    }, []),
+    l(() => {
+      r.current = new N({ duration: t / 10 });
+      let e = (t) => {
+        r.current && (r.current.raf(t), requestAnimationFrame(e));
+      };
+      return (
+        requestAnimationFrame(e),
+        () => {
+          r.current &&= (r.current.destroy(), null);
+        }
+      );
+    }, []),
+    l(() => {
+      let e = document.createElement(`style`);
+      return (
+        (e.textContent = `
 html.lenis {
 height: auto;
 }
@@ -18,5 +611,680 @@ overflow: hidden;
 
 pointer-events: none;
 }
-`,document.head.appendChild(e),()=>{document.head.removeChild(e)}},[]),l(()=>{let e=[...document.querySelectorAll(`a[href]`)].filter(e=>e.href.includes(`#`)).map(e=>{let t=`#${e.href.split(`#`).pop()}`,n=decodeURIComponent(t),r=0,a=document.querySelector(n);return a&&(r=parseInt(i.getComputedStyle(a).scrollMarginTop)),{href:t,scrollMargin:r,anchorElement:e}}),t=(e,t,n)=>{e.preventDefault(),r.current.scrollTo(t,{offset:-n})},n=e.map(({href:e,scrollMargin:n})=>r=>t(r,e,n));return e.forEach(({anchorElement:e},t)=>{e.addEventListener(`click`,n[t])}),()=>{e.forEach(({anchorElement:e},t)=>{e.removeEventListener(`click`,n[t])})}},[r]),s(p,{})}var ae=e((()=>{r(),f(),x(),ie(),t(),P.displayName=`Smooth Scroll Dev`,T(P,{intensity:{title:`Intensity`,type:C.Number,defaultValue:10,description:`More components at [Framer University](https://frameruni.link/cc).`}})}));function F(e,...t){let n={};return t?.forEach(t=>t&&Object.assign(n,e[t])),n}var I,L,oe,R,z,B,V,H,U,W,G,se=e((()=>{f(),x(),v(),t(),I=[`Md9vpNvNH`,`tXxIuTBlj`,`J2q8PCmMu`],L=`framer-F1NDc`,oe={J2q8PCmMu:`framer-v-zis1mu`,Md9vpNvNH:`framer-v-a124bk`,tXxIuTBlj:`framer-v-12whg46`},R={damping:60,delay:0,mass:1,stiffness:250,type:`spring`},z=({value:e,children:t})=>{let n=o(g),r=e??n.transition,i=u(()=>({...n,transition:r}),[JSON.stringify(r)]);return s(g.Provider,{value:i,children:t})},B=h.create(a),V={Desktop:`Md9vpNvNH`,Mobile:`J2q8PCmMu`,Tablet:`tXxIuTBlj`},H=({height:e,id:t,width:n,...r})=>({...r,variant:V[r.variant]??r.variant??`Md9vpNvNH`}),U=(e,t)=>e.layoutDependency?t.join(`-`)+e.layoutDependency:t.join(`-`),W=re(c(function(e,t){let{activeLocale:r,setLocale:i}=te(),{style:o,className:c,layoutId:l,variant:u,...f}=H(e),{baseVariant:p,classNames:g,clearLoadingGesture:v,gestureHandlers:b,gestureVariant:x,isLoading:S,setGestureState:C,setVariant:re,variants:T}=ne({cycleOrder:I,defaultVariant:`Md9vpNvNH`,variant:u,variantClassNames:oe}),D=U(e,T),O=n(null),k=m(),A=[];return y(),s(_,{id:l??k,children:s(B,{animate:T,initial:!1,children:s(z,{value:R,children:s(h.footer,{...f,...b,className:ee(L,...A,`framer-a124bk`,c,g),"data-framer-name":`Desktop`,layoutDependency:D,layoutId:`Md9vpNvNH`,ref:t??O,style:{...o},...F({J2q8PCmMu:{"data-framer-name":`Mobile`},tXxIuTBlj:{"data-framer-name":`Tablet`}},p,x),children:s(h.div,{className:`framer-1pql8gu`,"data-framer-name":`wrapper-filled`,layoutDependency:D,layoutId:`lH9EABoQE`,style:{borderBottomLeftRadius:36,borderBottomRightRadius:36,borderTopLeftRadius:36,borderTopRightRadius:36},children:d(h.div,{className:`framer-lcv5v2`,"data-framer-name":`container`,layoutDependency:D,layoutId:`FLBlXRLNf`,children:[s(h.div,{className:`framer-1g567j9`,"data-framer-name":`social-media`,layoutDependency:D,layoutId:`YPcWFmL9v`,children:s(w,{href:`mailto:create@cocreate.ventures`,nodeId:`Zu_WwbIMi`,openInNewTab:!0,children:s(h.a,{className:`framer-9suybb framer-1ia19v1`,"data-border":!0,"data-framer-name":`3`,layoutDependency:D,layoutId:`Zu_WwbIMi`,style:{"--border-bottom-width":`1px`,"--border-color":`rgba(17, 16, 17, 0.2)`,"--border-left-width":`0px`,"--border-right-width":`0px`,"--border-style":`solid`,"--border-top-width":`0px`},children:s(h.div,{className:`framer-1nkq92k`,"data-framer-name":`name`,layoutDependency:D,layoutId:`ucPcAgsZ4`,children:s(E,{__fromCanvasComponent:!0,children:d(a,{children:[s(h.p,{style:{"--font-selector":`RlM7U2F0b3NoaS1yZWd1bGFy`,"--framer-font-family":`"Satoshi", "Satoshi Placeholder", sans-serif`,"--framer-font-size":`18px`,"--framer-line-height":`150%`,"--framer-text-color":`var(--extracted-r6o4lv, var(--token-a378a457-09c9-4e21-8971-31a4dc6ae8ea, rgb(17, 16, 17)))`},children:`Email us at`}),s(h.p,{style:{"--font-selector":`RlM7U2F0b3NoaS1yZWd1bGFy`,"--framer-font-family":`"Satoshi", "Satoshi Placeholder", sans-serif`,"--framer-font-size":`18px`,"--framer-line-height":`150%`,"--framer-text-color":`var(--extracted-2gxw0f, var(--token-a378a457-09c9-4e21-8971-31a4dc6ae8ea, rgb(17, 16, 17)))`},children:`create@cocreate.ventures`})]}),className:`framer-1d10en0`,"data-framer-name":`Text`,fonts:[`FS;Satoshi-regular`],layoutDependency:D,layoutId:`tjoyin_Fe`,style:{"--extracted-2gxw0f":`var(--token-a378a457-09c9-4e21-8971-31a4dc6ae8ea, rgb(17, 16, 17))`,"--extracted-r6o4lv":`var(--token-a378a457-09c9-4e21-8971-31a4dc6ae8ea, rgb(17, 16, 17))`,"--framer-paragraph-spacing":`16px`},verticalAlignment:`top`,withExternalLayout:!0})})})})}),s(w,{href:`https://babarogic.com`,nodeId:`eqSet_en3`,children:s(h.a,{className:`framer-aazjkg framer-1ia19v1`,"data-framer-name":`copyright`,layoutDependency:D,layoutId:`eqSet_en3`,children:s(E,{__fromCanvasComponent:!0,children:s(a,{children:s(h.p,{style:{"--font-selector":`RlM7U2F0b3NoaS1yZWd1bGFy`,"--framer-font-family":`"Satoshi", "Satoshi Placeholder", sans-serif`,"--framer-line-height":`120%`,"--framer-text-color":`var(--extracted-r6o4lv, rgba(17, 16, 17, 0.6))`},children:`© 2024 Create On Campus`})}),className:`framer-1qqiozd`,"data-framer-name":`Footer text`,fonts:[`FS;Satoshi-regular`],layoutDependency:D,layoutId:`QZ7vOVfUz`,style:{"--extracted-r6o4lv":`rgba(17, 16, 17, 0.6)`,"--framer-paragraph-spacing":`16px`},verticalAlignment:`top`,withExternalLayout:!0,...F({J2q8PCmMu:{children:s(a,{children:s(h.p,{style:{"--font-selector":`RlM7U2F0b3NoaS1yZWd1bGFy`,"--framer-font-family":`"Satoshi", "Satoshi Placeholder", sans-serif`,"--framer-line-height":`120%`,"--framer-text-alignment":`center`,"--framer-text-color":`var(--extracted-r6o4lv, rgba(17, 16, 17, 0.6))`},children:`© 2024 Create On Campus`})})}},p,x)})})})]})})})})})})}),[`@supports (aspect-ratio: 1) { body { --framer-aspect-ratio-supported: auto; } }`,`.framer-F1NDc.framer-1ia19v1, .framer-F1NDc .framer-1ia19v1 { display: block; }`,`.framer-F1NDc.framer-a124bk { align-content: center; align-items: center; display: flex; flex-direction: column; flex-wrap: nowrap; gap: 0px; height: min-content; justify-content: flex-start; overflow: visible; padding: 0px 50px 50px 50px; position: relative; width: 1536px; }`,`.framer-F1NDc .framer-1pql8gu { align-content: center; align-items: center; display: flex; flex: none; flex-direction: column; flex-wrap: nowrap; gap: 64px; height: min-content; justify-content: flex-start; overflow: visible; padding: 0px; position: relative; width: 100%; }`,`.framer-F1NDc .framer-lcv5v2 { align-content: center; align-items: center; display: flex; flex: none; flex-direction: column; flex-wrap: nowrap; gap: 84px; height: min-content; justify-content: center; overflow: hidden; padding: 120px 60px 120px 60px; position: relative; width: 100%; }`,`.framer-F1NDc .framer-1g567j9 { align-content: center; align-items: center; display: flex; flex: none; flex-direction: row; flex-wrap: wrap; gap: 32px; height: min-content; justify-content: flex-start; max-width: 1280px; overflow: visible; padding: 0px 60px 0px 60px; position: relative; width: 100%; }`,`.framer-F1NDc .framer-9suybb { align-content: center; align-items: center; display: flex; flex: 1 0 0px; flex-direction: row; flex-wrap: nowrap; height: min-content; justify-content: space-between; min-width: 256px; overflow: visible; padding: 0px 0px 16px 0px; position: relative; text-decoration: none; width: 1px; }`,`.framer-F1NDc .framer-1nkq92k { align-content: center; align-items: center; display: flex; flex: none; flex-direction: row; flex-wrap: nowrap; gap: 7px; height: min-content; justify-content: center; overflow: hidden; padding: 8px 0px 8px 0px; position: relative; width: min-content; }`,`.framer-F1NDc .framer-1d10en0, .framer-F1NDc .framer-1qqiozd { flex: none; height: auto; position: relative; white-space: pre; width: auto; }`,`.framer-F1NDc .framer-aazjkg { align-content: center; align-items: center; display: flex; flex: none; flex-direction: row; flex-wrap: nowrap; gap: 32px; height: min-content; justify-content: center; max-width: 1280px; overflow: visible; padding: 0px 60px 0px 60px; position: relative; text-decoration: none; width: min-content; }`,`@supports (background: -webkit-named-image(i)) and (not (font-palette:dark)) { .framer-F1NDc.framer-a124bk, .framer-F1NDc .framer-1pql8gu, .framer-F1NDc .framer-lcv5v2, .framer-F1NDc .framer-1g567j9, .framer-F1NDc .framer-1nkq92k, .framer-F1NDc .framer-aazjkg { gap: 0px; } .framer-F1NDc.framer-a124bk > * { margin: 0px; margin-bottom: calc(0px / 2); margin-top: calc(0px / 2); } .framer-F1NDc.framer-a124bk > :first-child, .framer-F1NDc .framer-1pql8gu > :first-child, .framer-F1NDc .framer-lcv5v2 > :first-child { margin-top: 0px; } .framer-F1NDc.framer-a124bk > :last-child, .framer-F1NDc .framer-1pql8gu > :last-child, .framer-F1NDc .framer-lcv5v2 > :last-child { margin-bottom: 0px; } .framer-F1NDc .framer-1pql8gu > * { margin: 0px; margin-bottom: calc(64px / 2); margin-top: calc(64px / 2); } .framer-F1NDc .framer-lcv5v2 > * { margin: 0px; margin-bottom: calc(84px / 2); margin-top: calc(84px / 2); } .framer-F1NDc .framer-1g567j9 > *, .framer-F1NDc .framer-aazjkg > * { margin: 0px; margin-left: calc(32px / 2); margin-right: calc(32px / 2); } .framer-F1NDc .framer-1g567j9 > :first-child, .framer-F1NDc .framer-1nkq92k > :first-child, .framer-F1NDc .framer-aazjkg > :first-child { margin-left: 0px; } .framer-F1NDc .framer-1g567j9 > :last-child, .framer-F1NDc .framer-1nkq92k > :last-child, .framer-F1NDc .framer-aazjkg > :last-child { margin-right: 0px; } .framer-F1NDc .framer-1nkq92k > * { margin: 0px; margin-left: calc(7px / 2); margin-right: calc(7px / 2); } }`,`.framer-F1NDc.framer-v-12whg46.framer-a124bk { width: 768px; }`,`.framer-F1NDc.framer-v-12whg46 .framer-lcv5v2 { padding: 120px 0px 40px 0px; }`,`.framer-F1NDc.framer-v-12whg46 .framer-1g567j9 { padding: 0px; }`,`.framer-F1NDc.framer-v-12whg46 .framer-9suybb { min-width: 160px; }`,`.framer-F1NDc.framer-v-zis1mu.framer-a124bk { padding: 0px 0px 50px 0px; width: 390px; }`,`.framer-F1NDc.framer-v-zis1mu .framer-lcv5v2 { padding: 80px 0px 40px 0px; }`,`.framer-F1NDc.framer-v-zis1mu .framer-1g567j9 { flex-direction: column; padding: 0px 32px 0px 32px; }`,`.framer-F1NDc.framer-v-zis1mu .framer-9suybb { flex: none; min-width: unset; width: 100%; }`,`.framer-F1NDc.framer-v-zis1mu .framer-aazjkg { padding: 0px 16px 0px 16px; width: 100%; }`,`.framer-F1NDc.framer-v-zis1mu .framer-1qqiozd { flex: 1 0 0px; white-space: pre-wrap; width: 1px; word-break: break-word; word-wrap: break-word; }`,`@supports (background: -webkit-named-image(i)) and (not (font-palette:dark)) { .framer-F1NDc.framer-v-zis1mu .framer-1g567j9 { gap: 0px; } .framer-F1NDc.framer-v-zis1mu .framer-1g567j9 > * { margin: 0px; margin-bottom: calc(32px / 2); margin-top: calc(32px / 2); } .framer-F1NDc.framer-v-zis1mu .framer-1g567j9 > :first-child { margin-top: 0px; } .framer-F1NDc.framer-v-zis1mu .framer-1g567j9 > :last-child { margin-bottom: 0px; } }`,`.framer-F1NDc[data-border="true"]::after, .framer-F1NDc [data-border="true"]::after { content: ""; border-width: var(--border-top-width, 0) var(--border-right-width, 0) var(--border-bottom-width, 0) var(--border-left-width, 0); border-color: var(--border-color, none); border-style: var(--border-style, none); width: 100%; height: 100%; position: absolute; box-sizing: border-box; left: 0; top: 0; border-radius: inherit; pointer-events: none; }`],`framer-F1NDc`),G=W,W.displayName=`Footer`,W.defaultProps={height:495,width:1536},T(W,{variant:{options:[`Md9vpNvNH`,`tXxIuTBlj`,`J2q8PCmMu`],optionTitles:[`Desktop`,`Tablet`,`Mobile`],title:`Variant`,type:C.Enum}}),b(W,[{explicitInter:!0,fonts:[{family:`Satoshi`,source:`fontshare`,style:`normal`,url:`https://framerusercontent.com/third-party-assets/fontshare/wf/TTX2Z3BF3P6Y5BQT3IV2VNOK6FL22KUT/7QYRJOI3JIMYHGY6CH7SOIFRQLZOLNJ6/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2`,weight:`400`}]}],{supportsExplicitInterCodegen:!0})})),K,q,J,ce=e((()=>{x(),S.loadFonts([`GF;Lustria-regular`]),K=[{explicitInter:!0,fonts:[{family:`Lustria`,source:`google`,style:`normal`,url:`https://fonts.gstatic.com/s/lustria/v13/9oRONYodvDEyjuhOrC05MtPyAcg.woff2`,weight:`400`}]}],q=[`.framer-1GnFd .framer-styles-preset-3ossdy:not(.rich-text-wrapper), .framer-1GnFd .framer-styles-preset-3ossdy.rich-text-wrapper h2 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 48px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -1px; --framer-line-height: 1.2em; --framer-paragraph-spacing: 40px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: capitalize; }`,`@media (max-width: 1535px) and (min-width: 1280px) { .framer-1GnFd .framer-styles-preset-3ossdy:not(.rich-text-wrapper), .framer-1GnFd .framer-styles-preset-3ossdy.rich-text-wrapper h2 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 42px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -1px; --framer-line-height: 1.2em; --framer-paragraph-spacing: 40px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: capitalize; } }`,`@media (max-width: 1279px) and (min-width: 768px) { .framer-1GnFd .framer-styles-preset-3ossdy:not(.rich-text-wrapper), .framer-1GnFd .framer-styles-preset-3ossdy.rich-text-wrapper h2 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 40px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -1px; --framer-line-height: 1.2em; --framer-paragraph-spacing: 40px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: capitalize; } }`,`@media (max-width: 767px) and (min-width: 0px) { .framer-1GnFd .framer-styles-preset-3ossdy:not(.rich-text-wrapper), .framer-1GnFd .framer-styles-preset-3ossdy.rich-text-wrapper h2 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 36px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -1px; --framer-line-height: 1.2em; --framer-paragraph-spacing: 40px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: capitalize; } }`],J=`framer-1GnFd`})),Y,X,Z,le=e((()=>{x(),S.loadFonts([`GF;Lustria-regular`]),Y=[{explicitInter:!0,fonts:[{family:`Lustria`,source:`google`,style:`normal`,url:`https://fonts.gstatic.com/s/lustria/v13/9oRONYodvDEyjuhOrC05MtPyAcg.woff2`,weight:`400`}]}],X=[`.framer-5u1eV .framer-styles-preset-1lblvzu:not(.rich-text-wrapper), .framer-5u1eV .framer-styles-preset-1lblvzu.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 60px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.04em; --framer-line-height: 1.4em; --framer-paragraph-spacing: 40px; --framer-text-alignment: start; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; }`,`@media (max-width: 1535px) and (min-width: 1280px) { .framer-5u1eV .framer-styles-preset-1lblvzu:not(.rich-text-wrapper), .framer-5u1eV .framer-styles-preset-1lblvzu.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 48px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.04em; --framer-line-height: 1.4em; --framer-paragraph-spacing: 40px; --framer-text-alignment: start; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,`@media (max-width: 1279px) and (min-width: 768px) { .framer-5u1eV .framer-styles-preset-1lblvzu:not(.rich-text-wrapper), .framer-5u1eV .framer-styles-preset-1lblvzu.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 38px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.04em; --framer-line-height: 1.4em; --framer-paragraph-spacing: 40px; --framer-text-alignment: start; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,`@media (max-width: 767px) and (min-width: 0px) { .framer-5u1eV .framer-styles-preset-1lblvzu:not(.rich-text-wrapper), .framer-5u1eV .framer-styles-preset-1lblvzu.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 31px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.04em; --framer-line-height: 1.4em; --framer-paragraph-spacing: 40px; --framer-text-alignment: start; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`],Z=`framer-5u1eV`})),Q,$,ue,de=e((()=>{x(),S.loadFonts([`Inter`,`Inter-Bold`,`Inter-BoldItalic`,`Inter-Italic`]),Q=[{explicitInter:!0,fonts:[{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F`,url:`https://framerusercontent.com/assets/5vvr9Vy74if2I6bQbJvbw7SY1pQ.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116`,url:`https://framerusercontent.com/assets/EOr0mi4hNtlgWNn9if640EZzXCo.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+1F00-1FFF`,url:`https://framerusercontent.com/assets/Y9k9QrlZAqio88Klkmbd8VoMQc.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0370-03FF`,url:`https://framerusercontent.com/assets/OYrD2tBIBPvoJXiIHnLoOXnY9M.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF`,url:`https://framerusercontent.com/assets/JeYwfuaPfZHQhEG8U5gtPDZ7WQ.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD`,url:`https://framerusercontent.com/assets/vQyevYAyHtARFwPqUzQGpnDs.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB`,url:`https://framerusercontent.com/assets/b6Y37FthZeALduNqHicBT6FutY.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F`,url:`https://framerusercontent.com/assets/DpPBYI0sL4fYLgAkX8KXOPVt7c.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116`,url:`https://framerusercontent.com/assets/4RAEQdEOrcnDkhHiiCbJOw92Lk.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+1F00-1FFF`,url:`https://framerusercontent.com/assets/1K3W8DizY3v4emK8Mb08YHxTbs.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0370-03FF`,url:`https://framerusercontent.com/assets/tUSCtfYVM1I1IchuyCwz9gDdQ.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF`,url:`https://framerusercontent.com/assets/VgYFWiwsAC5OYxAycRXXvhze58.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD`,url:`https://framerusercontent.com/assets/DXD0Q7LSl7HEvDzucnyLnGBHM.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`normal`,unicodeRange:`U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB`,url:`https://framerusercontent.com/assets/GIryZETIX4IFypco5pYZONKhJIo.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F`,url:`https://framerusercontent.com/assets/H89BbHkbHDzlxZzxi8uPzTsp90.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116`,url:`https://framerusercontent.com/assets/u6gJwDuwB143kpNK1T1MDKDWkMc.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+1F00-1FFF`,url:`https://framerusercontent.com/assets/43sJ6MfOPh1LCJt46OvyDuSbA6o.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0370-03FF`,url:`https://framerusercontent.com/assets/wccHG0r4gBDAIRhfHiOlq6oEkqw.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF`,url:`https://framerusercontent.com/assets/WZ367JPwf9bRW6LdTHN8rXgSjw.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD`,url:`https://framerusercontent.com/assets/QxmhnWTzLtyjIiZcfaLIJ8EFBXU.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB`,url:`https://framerusercontent.com/assets/2A4Xx7CngadFGlVV4xrO06OBHY.woff2`,weight:`700`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F`,url:`https://framerusercontent.com/assets/CfMzU8w2e7tHgF4T4rATMPuWosA.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116`,url:`https://framerusercontent.com/assets/867QObYax8ANsfX4TGEVU9YiCM.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+1F00-1FFF`,url:`https://framerusercontent.com/assets/Oyn2ZbENFdnW7mt2Lzjk1h9Zb9k.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0370-03FF`,url:`https://framerusercontent.com/assets/cdAe8hgZ1cMyLu9g005pAW3xMo.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF`,url:`https://framerusercontent.com/assets/DOfvtmE1UplCq161m6Hj8CSQYg.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD`,url:`https://framerusercontent.com/assets/vFzuJY0c65av44uhEKB6vyjFMg.woff2`,weight:`400`},{family:`Inter`,source:`framer`,style:`italic`,unicodeRange:`U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB`,url:`https://framerusercontent.com/assets/tKtBcDnBMevsEEJKdNGhhkLzYo.woff2`,weight:`400`}]}],$=[`.framer-mEezL .framer-styles-preset-1bbl997:not(.rich-text-wrapper), .framer-mEezL .framer-styles-preset-1bbl997.rich-text-wrapper p { --framer-font-family: "Inter", sans-serif; --framer-font-family-bold: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-bold-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-open-type-features: normal; --framer-font-size: 21px; --framer-font-style: normal; --framer-font-style-bold: normal; --framer-font-style-bold-italic: italic; --framer-font-style-italic: italic; --framer-font-weight: 400; --framer-font-weight-bold: 700; --framer-font-weight-bold-italic: 700; --framer-font-weight-italic: 400; --framer-letter-spacing: -0.01em; --framer-line-height: 1.6em; --framer-paragraph-spacing: 20px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; }`,`@media (max-width: 1199px) and (min-width: 810px) { .framer-mEezL .framer-styles-preset-1bbl997:not(.rich-text-wrapper), .framer-mEezL .framer-styles-preset-1bbl997.rich-text-wrapper p { --framer-font-family: "Inter", sans-serif; --framer-font-family-bold: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-bold-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-open-type-features: normal; --framer-font-size: 21px; --framer-font-style: normal; --framer-font-style-bold: normal; --framer-font-style-bold-italic: italic; --framer-font-style-italic: italic; --framer-font-weight: 400; --framer-font-weight-bold: 700; --framer-font-weight-bold-italic: 700; --framer-font-weight-italic: 400; --framer-letter-spacing: -0.01em; --framer-line-height: 1.6em; --framer-paragraph-spacing: 20px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,`@media (max-width: 809px) and (min-width: 0px) { .framer-mEezL .framer-styles-preset-1bbl997:not(.rich-text-wrapper), .framer-mEezL .framer-styles-preset-1bbl997.rich-text-wrapper p { --framer-font-family: "Inter", sans-serif; --framer-font-family-bold: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-bold-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-open-type-features: normal; --framer-font-size: 18px; --framer-font-style: normal; --framer-font-style-bold: normal; --framer-font-style-bold-italic: italic; --framer-font-style-italic: italic; --framer-font-weight: 400; --framer-font-weight-bold: 700; --framer-font-weight-bold-italic: 700; --framer-font-weight-italic: 400; --framer-letter-spacing: -0.01em; --framer-line-height: 1.6em; --framer-paragraph-spacing: 20px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`],ue=`framer-mEezL`}));export{Z as a,le as c,K as d,ce as f,ae as g,P as h,de as i,J as l,G as m,$ as n,X as o,se as p,Q as r,Y as s,ue as t,q as u};
+`),
+        document.head.appendChild(e),
+        () => {
+          document.head.removeChild(e);
+        }
+      );
+    }, []),
+    l(() => {
+      let e = [...document.querySelectorAll(`a[href]`)]
+          .filter((e) => e.href.includes(`#`))
+          .map((e) => {
+            let t = `#${e.href.split(`#`).pop()}`,
+              n = decodeURIComponent(t),
+              r = 0,
+              a = document.querySelector(n);
+            return (
+              a && (r = parseInt(i.getComputedStyle(a).scrollMarginTop)),
+              { href: t, scrollMargin: r, anchorElement: e }
+            );
+          }),
+        t = (e, t, n) => {
+          (e.preventDefault(), r.current.scrollTo(t, { offset: -n }));
+        },
+        n = e.map(
+          ({ href: e, scrollMargin: n }) =>
+            (r) =>
+              t(r, e, n)
+        );
+      return (
+        e.forEach(({ anchorElement: e }, t) => {
+          e.addEventListener(`click`, n[t]);
+        }),
+        () => {
+          e.forEach(({ anchorElement: e }, t) => {
+            e.removeEventListener(`click`, n[t]);
+          });
+        }
+      );
+    }, [r]),
+    s(p, {})
+  );
+}
+var ae = e(() => {
+  (r(),
+    f(),
+    x(),
+    ie(),
+    t(),
+    (P.displayName = `Smooth Scroll Dev`),
+    T(P, {
+      intensity: {
+        title: `Intensity`,
+        type: C.Number,
+        defaultValue: 10,
+        description: `More components at [Framer University](https://frameruni.link/cc).`,
+      },
+    }));
+});
+function F(e, ...t) {
+  let n = {};
+  return (t?.forEach((t) => t && Object.assign(n, e[t])), n);
+}
+var I,
+  L,
+  oe,
+  R,
+  z,
+  B,
+  V,
+  H,
+  U,
+  W,
+  G,
+  se = e(() => {
+    (f(),
+      x(),
+      v(),
+      t(),
+      (I = [`Md9vpNvNH`, `tXxIuTBlj`, `J2q8PCmMu`]),
+      (L = `framer-F1NDc`),
+      (oe = {
+        J2q8PCmMu: `framer-v-zis1mu`,
+        Md9vpNvNH: `framer-v-a124bk`,
+        tXxIuTBlj: `framer-v-12whg46`,
+      }),
+      (R = { damping: 60, delay: 0, mass: 1, stiffness: 250, type: `spring` }),
+      (z = ({ value: e, children: t }) => {
+        let n = o(g),
+          r = e ?? n.transition,
+          i = u(() => ({ ...n, transition: r }), [JSON.stringify(r)]);
+        return s(g.Provider, { value: i, children: t });
+      }),
+      (B = h.create(a)),
+      (V = { Desktop: `Md9vpNvNH`, Mobile: `J2q8PCmMu`, Tablet: `tXxIuTBlj` }),
+      (H = ({ height: e, id: t, width: n, ...r }) => ({
+        ...r,
+        variant: V[r.variant] ?? r.variant ?? `Md9vpNvNH`,
+      })),
+      (U = (e, t) => (e.layoutDependency ? t.join(`-`) + e.layoutDependency : t.join(`-`))),
+      (W = re(
+        c(function (e, t) {
+          let { activeLocale: r, setLocale: i } = te(),
+            { style: o, className: c, layoutId: l, variant: u, ...f } = H(e),
+            {
+              baseVariant: p,
+              classNames: g,
+              clearLoadingGesture: v,
+              gestureHandlers: b,
+              gestureVariant: x,
+              isLoading: S,
+              setGestureState: C,
+              setVariant: re,
+              variants: T,
+            } = ne({
+              cycleOrder: I,
+              defaultVariant: `Md9vpNvNH`,
+              variant: u,
+              variantClassNames: oe,
+            }),
+            D = U(e, T),
+            O = n(null),
+            k = m(),
+            A = [];
+          return (
+            y(),
+            s(_, {
+              id: l ?? k,
+              children: s(B, {
+                animate: T,
+                initial: !1,
+                children: s(z, {
+                  value: R,
+                  children: s(h.footer, {
+                    ...f,
+                    ...b,
+                    className: ee(L, ...A, `framer-a124bk`, c, g),
+                    "data-framer-name": `Desktop`,
+                    layoutDependency: D,
+                    layoutId: `Md9vpNvNH`,
+                    ref: t ?? O,
+                    style: { ...o },
+                    ...F(
+                      {
+                        J2q8PCmMu: { "data-framer-name": `Mobile` },
+                        tXxIuTBlj: { "data-framer-name": `Tablet` },
+                      },
+                      p,
+                      x
+                    ),
+                    children: s(h.div, {
+                      className: `framer-1pql8gu`,
+                      "data-framer-name": `wrapper-filled`,
+                      layoutDependency: D,
+                      layoutId: `lH9EABoQE`,
+                      style: {
+                        borderBottomLeftRadius: 36,
+                        borderBottomRightRadius: 36,
+                        borderTopLeftRadius: 36,
+                        borderTopRightRadius: 36,
+                      },
+                      children: d(h.div, {
+                        className: `framer-lcv5v2`,
+                        "data-framer-name": `container`,
+                        layoutDependency: D,
+                        layoutId: `FLBlXRLNf`,
+                        children: [
+                          s(h.div, {
+                            className: `framer-1g567j9`,
+                            "data-framer-name": `social-media`,
+                            layoutDependency: D,
+                            layoutId: `YPcWFmL9v`,
+                            children: s(w, {
+                              href: `mailto:create@cocreate.ventures`,
+                              nodeId: `Zu_WwbIMi`,
+                              openInNewTab: !0,
+                              children: s(h.a, {
+                                className: `framer-9suybb framer-1ia19v1`,
+                                "data-border": !0,
+                                "data-framer-name": `3`,
+                                layoutDependency: D,
+                                layoutId: `Zu_WwbIMi`,
+                                style: {
+                                  "--border-bottom-width": `1px`,
+                                  "--border-color": `rgba(17, 16, 17, 0.2)`,
+                                  "--border-left-width": `0px`,
+                                  "--border-right-width": `0px`,
+                                  "--border-style": `solid`,
+                                  "--border-top-width": `0px`,
+                                },
+                                children: s(h.div, {
+                                  className: `framer-1nkq92k`,
+                                  "data-framer-name": `name`,
+                                  layoutDependency: D,
+                                  layoutId: `ucPcAgsZ4`,
+                                  children: s(E, {
+                                    __fromCanvasComponent: !0,
+                                    children: d(a, {
+                                      children: [
+                                        s(h.p, {
+                                          style: {
+                                            "--font-selector": `RlM7U2F0b3NoaS1yZWd1bGFy`,
+                                            "--framer-font-family": `"Satoshi", "Satoshi Placeholder", sans-serif`,
+                                            "--framer-font-size": `18px`,
+                                            "--framer-line-height": `150%`,
+                                            "--framer-text-color": `var(--extracted-r6o4lv, var(--token-a378a457-09c9-4e21-8971-31a4dc6ae8ea, rgb(17, 16, 17)))`,
+                                          },
+                                          children: `Email us at`,
+                                        }),
+                                        s(h.p, {
+                                          style: {
+                                            "--font-selector": `RlM7U2F0b3NoaS1yZWd1bGFy`,
+                                            "--framer-font-family": `"Satoshi", "Satoshi Placeholder", sans-serif`,
+                                            "--framer-font-size": `18px`,
+                                            "--framer-line-height": `150%`,
+                                            "--framer-text-color": `var(--extracted-2gxw0f, var(--token-a378a457-09c9-4e21-8971-31a4dc6ae8ea, rgb(17, 16, 17)))`,
+                                          },
+                                          children: `create@cocreate.ventures`,
+                                        }),
+                                      ],
+                                    }),
+                                    className: `framer-1d10en0`,
+                                    "data-framer-name": `Text`,
+                                    fonts: [`FS;Satoshi-regular`],
+                                    layoutDependency: D,
+                                    layoutId: `tjoyin_Fe`,
+                                    style: {
+                                      "--extracted-2gxw0f": `var(--token-a378a457-09c9-4e21-8971-31a4dc6ae8ea, rgb(17, 16, 17))`,
+                                      "--extracted-r6o4lv": `var(--token-a378a457-09c9-4e21-8971-31a4dc6ae8ea, rgb(17, 16, 17))`,
+                                      "--framer-paragraph-spacing": `16px`,
+                                    },
+                                    verticalAlignment: `top`,
+                                    withExternalLayout: !0,
+                                  }),
+                                }),
+                              }),
+                            }),
+                          }),
+                          s(w, {
+                            href: `https://babarogic.com`,
+                            nodeId: `eqSet_en3`,
+                            children: s(h.a, {
+                              className: `framer-aazjkg framer-1ia19v1`,
+                              "data-framer-name": `copyright`,
+                              layoutDependency: D,
+                              layoutId: `eqSet_en3`,
+                              children: s(E, {
+                                __fromCanvasComponent: !0,
+                                children: s(a, {
+                                  children: s(h.p, {
+                                    style: {
+                                      "--font-selector": `RlM7U2F0b3NoaS1yZWd1bGFy`,
+                                      "--framer-font-family": `"Satoshi", "Satoshi Placeholder", sans-serif`,
+                                      "--framer-line-height": `120%`,
+                                      "--framer-text-color": `var(--extracted-r6o4lv, rgba(17, 16, 17, 0.6))`,
+                                    },
+                                    children: `© 2024 Create On Campus`,
+                                  }),
+                                }),
+                                className: `framer-1qqiozd`,
+                                "data-framer-name": `Footer text`,
+                                fonts: [`FS;Satoshi-regular`],
+                                layoutDependency: D,
+                                layoutId: `QZ7vOVfUz`,
+                                style: {
+                                  "--extracted-r6o4lv": `rgba(17, 16, 17, 0.6)`,
+                                  "--framer-paragraph-spacing": `16px`,
+                                },
+                                verticalAlignment: `top`,
+                                withExternalLayout: !0,
+                                ...F(
+                                  {
+                                    J2q8PCmMu: {
+                                      children: s(a, {
+                                        children: s(h.p, {
+                                          style: {
+                                            "--font-selector": `RlM7U2F0b3NoaS1yZWd1bGFy`,
+                                            "--framer-font-family": `"Satoshi", "Satoshi Placeholder", sans-serif`,
+                                            "--framer-line-height": `120%`,
+                                            "--framer-text-alignment": `center`,
+                                            "--framer-text-color": `var(--extracted-r6o4lv, rgba(17, 16, 17, 0.6))`,
+                                          },
+                                          children: `© 2024 Create On Campus`,
+                                        }),
+                                      }),
+                                    },
+                                  },
+                                  p,
+                                  x
+                                ),
+                              }),
+                            }),
+                          }),
+                        ],
+                      }),
+                    }),
+                  }),
+                }),
+              }),
+            })
+          );
+        }),
+        [
+          `@supports (aspect-ratio: 1) { body { --framer-aspect-ratio-supported: auto; } }`,
+          `.framer-F1NDc.framer-1ia19v1, .framer-F1NDc .framer-1ia19v1 { display: block; }`,
+          `.framer-F1NDc.framer-a124bk { align-content: center; align-items: center; display: flex; flex-direction: column; flex-wrap: nowrap; gap: 0px; height: min-content; justify-content: flex-start; overflow: visible; padding: 0px 50px 50px 50px; position: relative; width: 1536px; }`,
+          `.framer-F1NDc .framer-1pql8gu { align-content: center; align-items: center; display: flex; flex: none; flex-direction: column; flex-wrap: nowrap; gap: 64px; height: min-content; justify-content: flex-start; overflow: visible; padding: 0px; position: relative; width: 100%; }`,
+          `.framer-F1NDc .framer-lcv5v2 { align-content: center; align-items: center; display: flex; flex: none; flex-direction: column; flex-wrap: nowrap; gap: 84px; height: min-content; justify-content: center; overflow: hidden; padding: 120px 60px 120px 60px; position: relative; width: 100%; }`,
+          `.framer-F1NDc .framer-1g567j9 { align-content: center; align-items: center; display: flex; flex: none; flex-direction: row; flex-wrap: wrap; gap: 32px; height: min-content; justify-content: flex-start; max-width: 1280px; overflow: visible; padding: 0px 60px 0px 60px; position: relative; width: 100%; }`,
+          `.framer-F1NDc .framer-9suybb { align-content: center; align-items: center; display: flex; flex: 1 0 0px; flex-direction: row; flex-wrap: nowrap; height: min-content; justify-content: space-between; min-width: 256px; overflow: visible; padding: 0px 0px 16px 0px; position: relative; text-decoration: none; width: 1px; }`,
+          `.framer-F1NDc .framer-1nkq92k { align-content: center; align-items: center; display: flex; flex: none; flex-direction: row; flex-wrap: nowrap; gap: 7px; height: min-content; justify-content: center; overflow: hidden; padding: 8px 0px 8px 0px; position: relative; width: min-content; }`,
+          `.framer-F1NDc .framer-1d10en0, .framer-F1NDc .framer-1qqiozd { flex: none; height: auto; position: relative; white-space: pre; width: auto; }`,
+          `.framer-F1NDc .framer-aazjkg { align-content: center; align-items: center; display: flex; flex: none; flex-direction: row; flex-wrap: nowrap; gap: 32px; height: min-content; justify-content: center; max-width: 1280px; overflow: visible; padding: 0px 60px 0px 60px; position: relative; text-decoration: none; width: min-content; }`,
+          `@supports (background: -webkit-named-image(i)) and (not (font-palette:dark)) { .framer-F1NDc.framer-a124bk, .framer-F1NDc .framer-1pql8gu, .framer-F1NDc .framer-lcv5v2, .framer-F1NDc .framer-1g567j9, .framer-F1NDc .framer-1nkq92k, .framer-F1NDc .framer-aazjkg { gap: 0px; } .framer-F1NDc.framer-a124bk > * { margin: 0px; margin-bottom: calc(0px / 2); margin-top: calc(0px / 2); } .framer-F1NDc.framer-a124bk > :first-child, .framer-F1NDc .framer-1pql8gu > :first-child, .framer-F1NDc .framer-lcv5v2 > :first-child { margin-top: 0px; } .framer-F1NDc.framer-a124bk > :last-child, .framer-F1NDc .framer-1pql8gu > :last-child, .framer-F1NDc .framer-lcv5v2 > :last-child { margin-bottom: 0px; } .framer-F1NDc .framer-1pql8gu > * { margin: 0px; margin-bottom: calc(64px / 2); margin-top: calc(64px / 2); } .framer-F1NDc .framer-lcv5v2 > * { margin: 0px; margin-bottom: calc(84px / 2); margin-top: calc(84px / 2); } .framer-F1NDc .framer-1g567j9 > *, .framer-F1NDc .framer-aazjkg > * { margin: 0px; margin-left: calc(32px / 2); margin-right: calc(32px / 2); } .framer-F1NDc .framer-1g567j9 > :first-child, .framer-F1NDc .framer-1nkq92k > :first-child, .framer-F1NDc .framer-aazjkg > :first-child { margin-left: 0px; } .framer-F1NDc .framer-1g567j9 > :last-child, .framer-F1NDc .framer-1nkq92k > :last-child, .framer-F1NDc .framer-aazjkg > :last-child { margin-right: 0px; } .framer-F1NDc .framer-1nkq92k > * { margin: 0px; margin-left: calc(7px / 2); margin-right: calc(7px / 2); } }`,
+          `.framer-F1NDc.framer-v-12whg46.framer-a124bk { width: 768px; }`,
+          `.framer-F1NDc.framer-v-12whg46 .framer-lcv5v2 { padding: 120px 0px 40px 0px; }`,
+          `.framer-F1NDc.framer-v-12whg46 .framer-1g567j9 { padding: 0px; }`,
+          `.framer-F1NDc.framer-v-12whg46 .framer-9suybb { min-width: 160px; }`,
+          `.framer-F1NDc.framer-v-zis1mu.framer-a124bk { padding: 0px 0px 50px 0px; width: 390px; }`,
+          `.framer-F1NDc.framer-v-zis1mu .framer-lcv5v2 { padding: 80px 0px 40px 0px; }`,
+          `.framer-F1NDc.framer-v-zis1mu .framer-1g567j9 { flex-direction: column; padding: 0px 32px 0px 32px; }`,
+          `.framer-F1NDc.framer-v-zis1mu .framer-9suybb { flex: none; min-width: unset; width: 100%; }`,
+          `.framer-F1NDc.framer-v-zis1mu .framer-aazjkg { padding: 0px 16px 0px 16px; width: 100%; }`,
+          `.framer-F1NDc.framer-v-zis1mu .framer-1qqiozd { flex: 1 0 0px; white-space: pre-wrap; width: 1px; word-break: break-word; word-wrap: break-word; }`,
+          `@supports (background: -webkit-named-image(i)) and (not (font-palette:dark)) { .framer-F1NDc.framer-v-zis1mu .framer-1g567j9 { gap: 0px; } .framer-F1NDc.framer-v-zis1mu .framer-1g567j9 > * { margin: 0px; margin-bottom: calc(32px / 2); margin-top: calc(32px / 2); } .framer-F1NDc.framer-v-zis1mu .framer-1g567j9 > :first-child { margin-top: 0px; } .framer-F1NDc.framer-v-zis1mu .framer-1g567j9 > :last-child { margin-bottom: 0px; } }`,
+          `.framer-F1NDc[data-border="true"]::after, .framer-F1NDc [data-border="true"]::after { content: ""; border-width: var(--border-top-width, 0) var(--border-right-width, 0) var(--border-bottom-width, 0) var(--border-left-width, 0); border-color: var(--border-color, none); border-style: var(--border-style, none); width: 100%; height: 100%; position: absolute; box-sizing: border-box; left: 0; top: 0; border-radius: inherit; pointer-events: none; }`,
+        ],
+        `framer-F1NDc`
+      )),
+      (G = W),
+      (W.displayName = `Footer`),
+      (W.defaultProps = { height: 495, width: 1536 }),
+      T(W, {
+        variant: {
+          options: [`Md9vpNvNH`, `tXxIuTBlj`, `J2q8PCmMu`],
+          optionTitles: [`Desktop`, `Tablet`, `Mobile`],
+          title: `Variant`,
+          type: C.Enum,
+        },
+      }),
+      b(
+        W,
+        [
+          {
+            explicitInter: !0,
+            fonts: [
+              {
+                family: `Satoshi`,
+                source: `fontshare`,
+                style: `normal`,
+                url: `../../assets/misc/KFIAZD4RUMEZIYV6FQ3T3GP5PDBDB6JY.woff2`,
+                weight: `400`,
+              },
+            ],
+          },
+        ],
+        { supportsExplicitInterCodegen: !0 }
+      ));
+  }),
+  K,
+  q,
+  J,
+  ce = e(() => {
+    (x(),
+      S.loadFonts([`GF;Lustria-regular`]),
+      (K = [
+        {
+          explicitInter: !0,
+          fonts: [
+            {
+              family: `Lustria`,
+              source: `google`,
+              style: `normal`,
+              url: `https://fonts.gstatic.com/s/lustria/v13/9oRONYodvDEyjuhOrC05MtPyAcg.woff2`,
+              weight: `400`,
+            },
+          ],
+        },
+      ]),
+      (q = [
+        `.framer-1GnFd .framer-styles-preset-3ossdy:not(.rich-text-wrapper), .framer-1GnFd .framer-styles-preset-3ossdy.rich-text-wrapper h2 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 48px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -1px; --framer-line-height: 1.2em; --framer-paragraph-spacing: 40px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: capitalize; }`,
+        `@media (max-width: 1535px) and (min-width: 1280px) { .framer-1GnFd .framer-styles-preset-3ossdy:not(.rich-text-wrapper), .framer-1GnFd .framer-styles-preset-3ossdy.rich-text-wrapper h2 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 42px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -1px; --framer-line-height: 1.2em; --framer-paragraph-spacing: 40px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: capitalize; } }`,
+        `@media (max-width: 1279px) and (min-width: 768px) { .framer-1GnFd .framer-styles-preset-3ossdy:not(.rich-text-wrapper), .framer-1GnFd .framer-styles-preset-3ossdy.rich-text-wrapper h2 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 40px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -1px; --framer-line-height: 1.2em; --framer-paragraph-spacing: 40px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: capitalize; } }`,
+        `@media (max-width: 767px) and (min-width: 0px) { .framer-1GnFd .framer-styles-preset-3ossdy:not(.rich-text-wrapper), .framer-1GnFd .framer-styles-preset-3ossdy.rich-text-wrapper h2 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 36px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -1px; --framer-line-height: 1.2em; --framer-paragraph-spacing: 40px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: capitalize; } }`,
+      ]),
+      (J = `framer-1GnFd`));
+  }),
+  Y,
+  X,
+  Z,
+  le = e(() => {
+    (x(),
+      S.loadFonts([`GF;Lustria-regular`]),
+      (Y = [
+        {
+          explicitInter: !0,
+          fonts: [
+            {
+              family: `Lustria`,
+              source: `google`,
+              style: `normal`,
+              url: `https://fonts.gstatic.com/s/lustria/v13/9oRONYodvDEyjuhOrC05MtPyAcg.woff2`,
+              weight: `400`,
+            },
+          ],
+        },
+      ]),
+      (X = [
+        `.framer-5u1eV .framer-styles-preset-1lblvzu:not(.rich-text-wrapper), .framer-5u1eV .framer-styles-preset-1lblvzu.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 60px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.04em; --framer-line-height: 1.4em; --framer-paragraph-spacing: 40px; --framer-text-alignment: start; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; }`,
+        `@media (max-width: 1535px) and (min-width: 1280px) { .framer-5u1eV .framer-styles-preset-1lblvzu:not(.rich-text-wrapper), .framer-5u1eV .framer-styles-preset-1lblvzu.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 48px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.04em; --framer-line-height: 1.4em; --framer-paragraph-spacing: 40px; --framer-text-alignment: start; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,
+        `@media (max-width: 1279px) and (min-width: 768px) { .framer-5u1eV .framer-styles-preset-1lblvzu:not(.rich-text-wrapper), .framer-5u1eV .framer-styles-preset-1lblvzu.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 38px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.04em; --framer-line-height: 1.4em; --framer-paragraph-spacing: 40px; --framer-text-alignment: start; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,
+        `@media (max-width: 767px) and (min-width: 0px) { .framer-5u1eV .framer-styles-preset-1lblvzu:not(.rich-text-wrapper), .framer-5u1eV .framer-styles-preset-1lblvzu.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 31px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.04em; --framer-line-height: 1.4em; --framer-paragraph-spacing: 40px; --framer-text-alignment: start; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,
+      ]),
+      (Z = `framer-5u1eV`));
+  }),
+  Q,
+  $,
+  ue,
+  de = e(() => {
+    (x(),
+      S.loadFonts([`Inter`, `Inter-Bold`, `Inter-BoldItalic`, `Inter-Italic`]),
+      (Q = [
+        {
+          explicitInter: !0,
+          fonts: [
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F`,
+              url: `https://framerusercontent.com/assets/5vvr9Vy74if2I6bQbJvbw7SY1pQ.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116`,
+              url: `https://framerusercontent.com/assets/EOr0mi4hNtlgWNn9if640EZzXCo.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+1F00-1FFF`,
+              url: `https://framerusercontent.com/assets/Y9k9QrlZAqio88Klkmbd8VoMQc.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0370-03FF`,
+              url: `https://framerusercontent.com/assets/OYrD2tBIBPvoJXiIHnLoOXnY9M.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF`,
+              url: `https://framerusercontent.com/assets/JeYwfuaPfZHQhEG8U5gtPDZ7WQ.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD`,
+              url: `../../assets/fonts/vQyevYAyHtARFwPqUzQGpnDs.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB`,
+              url: `https://framerusercontent.com/assets/b6Y37FthZeALduNqHicBT6FutY.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F`,
+              url: `https://framerusercontent.com/assets/DpPBYI0sL4fYLgAkX8KXOPVt7c.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116`,
+              url: `https://framerusercontent.com/assets/4RAEQdEOrcnDkhHiiCbJOw92Lk.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+1F00-1FFF`,
+              url: `https://framerusercontent.com/assets/1K3W8DizY3v4emK8Mb08YHxTbs.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0370-03FF`,
+              url: `https://framerusercontent.com/assets/tUSCtfYVM1I1IchuyCwz9gDdQ.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF`,
+              url: `https://framerusercontent.com/assets/VgYFWiwsAC5OYxAycRXXvhze58.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD`,
+              url: `../../assets/fonts/DXD0Q7LSl7HEvDzucnyLnGBHM.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `normal`,
+              unicodeRange: `U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB`,
+              url: `https://framerusercontent.com/assets/GIryZETIX4IFypco5pYZONKhJIo.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F`,
+              url: `https://framerusercontent.com/assets/H89BbHkbHDzlxZzxi8uPzTsp90.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116`,
+              url: `https://framerusercontent.com/assets/u6gJwDuwB143kpNK1T1MDKDWkMc.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+1F00-1FFF`,
+              url: `https://framerusercontent.com/assets/43sJ6MfOPh1LCJt46OvyDuSbA6o.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0370-03FF`,
+              url: `https://framerusercontent.com/assets/wccHG0r4gBDAIRhfHiOlq6oEkqw.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF`,
+              url: `https://framerusercontent.com/assets/WZ367JPwf9bRW6LdTHN8rXgSjw.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD`,
+              url: `https://framerusercontent.com/assets/QxmhnWTzLtyjIiZcfaLIJ8EFBXU.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB`,
+              url: `https://framerusercontent.com/assets/2A4Xx7CngadFGlVV4xrO06OBHY.woff2`,
+              weight: `700`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F`,
+              url: `https://framerusercontent.com/assets/CfMzU8w2e7tHgF4T4rATMPuWosA.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116`,
+              url: `https://framerusercontent.com/assets/867QObYax8ANsfX4TGEVU9YiCM.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+1F00-1FFF`,
+              url: `https://framerusercontent.com/assets/Oyn2ZbENFdnW7mt2Lzjk1h9Zb9k.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0370-03FF`,
+              url: `https://framerusercontent.com/assets/cdAe8hgZ1cMyLu9g005pAW3xMo.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF`,
+              url: `https://framerusercontent.com/assets/DOfvtmE1UplCq161m6Hj8CSQYg.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD`,
+              url: `https://framerusercontent.com/assets/vFzuJY0c65av44uhEKB6vyjFMg.woff2`,
+              weight: `400`,
+            },
+            {
+              family: `Inter`,
+              source: `framer`,
+              style: `italic`,
+              unicodeRange: `U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB`,
+              url: `https://framerusercontent.com/assets/tKtBcDnBMevsEEJKdNGhhkLzYo.woff2`,
+              weight: `400`,
+            },
+          ],
+        },
+      ]),
+      ($ = [
+        `.framer-mEezL .framer-styles-preset-1bbl997:not(.rich-text-wrapper), .framer-mEezL .framer-styles-preset-1bbl997.rich-text-wrapper p { --framer-font-family: "Inter", sans-serif; --framer-font-family-bold: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-bold-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-open-type-features: normal; --framer-font-size: 21px; --framer-font-style: normal; --framer-font-style-bold: normal; --framer-font-style-bold-italic: italic; --framer-font-style-italic: italic; --framer-font-weight: 400; --framer-font-weight-bold: 700; --framer-font-weight-bold-italic: 700; --framer-font-weight-italic: 400; --framer-letter-spacing: -0.01em; --framer-line-height: 1.6em; --framer-paragraph-spacing: 20px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; }`,
+        `@media (max-width: 1199px) and (min-width: 810px) { .framer-mEezL .framer-styles-preset-1bbl997:not(.rich-text-wrapper), .framer-mEezL .framer-styles-preset-1bbl997.rich-text-wrapper p { --framer-font-family: "Inter", sans-serif; --framer-font-family-bold: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-bold-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-open-type-features: normal; --framer-font-size: 21px; --framer-font-style: normal; --framer-font-style-bold: normal; --framer-font-style-bold-italic: italic; --framer-font-style-italic: italic; --framer-font-weight: 400; --framer-font-weight-bold: 700; --framer-font-weight-bold-italic: 700; --framer-font-weight-italic: 400; --framer-letter-spacing: -0.01em; --framer-line-height: 1.6em; --framer-paragraph-spacing: 20px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,
+        `@media (max-width: 809px) and (min-width: 0px) { .framer-mEezL .framer-styles-preset-1bbl997:not(.rich-text-wrapper), .framer-mEezL .framer-styles-preset-1bbl997.rich-text-wrapper p { --framer-font-family: "Inter", sans-serif; --framer-font-family-bold: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-bold-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-family-italic: "Inter", "Inter Placeholder", sans-serif; --framer-font-open-type-features: normal; --framer-font-size: 18px; --framer-font-style: normal; --framer-font-style-bold: normal; --framer-font-style-bold-italic: italic; --framer-font-style-italic: italic; --framer-font-weight: 400; --framer-font-weight-bold: 700; --framer-font-weight-bold-italic: 700; --framer-font-weight-italic: 400; --framer-letter-spacing: -0.01em; --framer-line-height: 1.6em; --framer-paragraph-spacing: 20px; --framer-text-alignment: left; --framer-text-color: var(--token-9f78760f-4e77-4579-86b9-46ed9f33d785, rgba(0, 0, 0, 0.65)); --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,
+      ]),
+      (ue = `framer-mEezL`));
+  });
+export {
+  Z as a,
+  le as c,
+  K as d,
+  ce as f,
+  ae as g,
+  P as h,
+  de as i,
+  J as l,
+  G as m,
+  $ as n,
+  X as o,
+  se as p,
+  Q as r,
+  Y as s,
+  ue as t,
+  q as u,
+};
 //# sourceMappingURL=UW1s8Kd16.CYAi1RCC.mjs.map

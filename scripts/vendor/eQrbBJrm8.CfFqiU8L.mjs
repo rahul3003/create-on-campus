@@ -1,2 +1,62 @@
-import{t as e}from"./rolldown-runtime.Bawp8BQ-.mjs";import{n as t,t as n}from"./shared-lib.CFe5fBXv.mjs";function r(e,n){return{breakpoints:[{hash:`8blmsd`,mediaQuery:`(min-width: 1400px)`},{hash:`1c4zlhw`,mediaQuery:`(min-width: 1200px) and (max-width: 1399.98px)`},{hash:`ulzftn`,mediaQuery:`(min-width: 768px) and (max-width: 1199.98px)`},{hash:`lrt0pz`,mediaQuery:`(max-width: 767.98px)`}],description:t(e,n).description,elements:{AvOOP7rlC:`benefits`,C2BrU3MIB:`3-services`,cYr5o27bG:`about-01`,DW5qkDhtJ:`about`,eb4s2BgDs:`about-text-03`,EFNg0Je3N:`6-services`,F9uPyqmjG:`experience`,FbNKkQFFK:`experience-1`,fRJignev1:`about-text-02`,Ggm4hDris:`4-services`,gtGXByLKm:`about-text-01`,HsrhDHl1m:`about-text-03-1`,Iu9lkPGq4:`about-section`,Ja_mU2Pvi:`awards`,K_GmQiQOC:`meet-us-01`,khEnb5Sxq:`process`,pcxUW8L_H:`faq`,pdtK_UIhE:`howitworks`,Pp9n2MIFZ:`pricing`,qEGmhVOrq:`work`,Ql2Y8i8AL:`1-services`,sXHUI_Xgz:`feature-section-1`,W8ajE0cSt:`services`,WRHHxqBal:`2-services`,WryNIFQCV:`story`,Zuh5O9pxl:`5-services`,zxBzwrwUr:`service`},framerSearch:{index:!0},robots:`max-image-preview:large`,serializationId:`framer-ObTUi`,title:`Create On Campus`,viewport:`width=device-width`}}var i,a,o=e((()=>{n(),i=1,a={exports:{default:{type:`function`,annotations:{framerContractVersion:`1`}},metadataVersion:{type:`variable`,annotations:{framerContractVersion:`1`}},__FramerMetadata__:{type:`variable`}}}}));export{i,o as n,r,a as t};
+import { t as e } from "./rolldown-runtime.Bawp8BQ-.mjs";
+import { n as t, t as n } from "./shared-lib.CFe5fBXv.mjs";
+function r(e, n) {
+  return {
+    breakpoints: [
+      { hash: `8blmsd`, mediaQuery: `(min-width: 1400px)` },
+      { hash: `1c4zlhw`, mediaQuery: `(min-width: 1200px) and (max-width: 1399.98px)` },
+      { hash: `ulzftn`, mediaQuery: `(min-width: 768px) and (max-width: 1199.98px)` },
+      { hash: `lrt0pz`, mediaQuery: `(max-width: 767.98px)` },
+    ],
+    description: t(e, n).description,
+    elements: {
+      AvOOP7rlC: `benefits`,
+      C2BrU3MIB: `3-services`,
+      cYr5o27bG: `about-01`,
+      DW5qkDhtJ: `about`,
+      eb4s2BgDs: `about-text-03`,
+      EFNg0Je3N: `6-services`,
+      F9uPyqmjG: `experience`,
+      FbNKkQFFK: `experience-1`,
+      fRJignev1: `about-text-02`,
+      Ggm4hDris: `4-services`,
+      gtGXByLKm: `about-text-01`,
+      HsrhDHl1m: `about-text-03-1`,
+      Iu9lkPGq4: `about-section`,
+      Ja_mU2Pvi: `awards`,
+      K_GmQiQOC: `meet-us-01`,
+      khEnb5Sxq: `process`,
+      pcxUW8L_H: `faq`,
+      pdtK_UIhE: `howitworks`,
+      Pp9n2MIFZ: `pricing`,
+      qEGmhVOrq: `work`,
+      Ql2Y8i8AL: `1-services`,
+      sXHUI_Xgz: `feature-section-1`,
+      W8ajE0cSt: `services`,
+      WRHHxqBal: `2-services`,
+      WryNIFQCV: `story`,
+      Zuh5O9pxl: `5-services`,
+      zxBzwrwUr: `service`,
+    },
+    framerSearch: { index: !0 },
+    robots: `max-image-preview:large`,
+    serializationId: `framer-ObTUi`,
+    title: `Create On Campus`,
+    viewport: `width=device-width`,
+  };
+}
+var i,
+  a,
+  o = e(() => {
+    (n(),
+      (i = 1),
+      (a = {
+        exports: {
+          default: { type: `function`, annotations: { framerContractVersion: `1` } },
+          metadataVersion: { type: `variable`, annotations: { framerContractVersion: `1` } },
+          __FramerMetadata__: { type: `variable` },
+        },
+      }));
+  });
+export { i, o as n, r, a as t };
 //# sourceMappingURL=eQrbBJrm8.CfFqiU8L.mjs.map

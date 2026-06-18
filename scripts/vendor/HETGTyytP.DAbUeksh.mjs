@@ -1,2 +1,32 @@
-import{t as e}from"./rolldown-runtime.Bawp8BQ-.mjs";import{H as t,O as n}from"./framer.Dbwxx7XS.mjs";var r,i,a,o=e((()=>{t(),n.loadFonts([`GF;Lustria-regular`]),r=[{explicitInter:!0,fonts:[{family:`Lustria`,source:`google`,style:`normal`,url:`https://fonts.gstatic.com/s/lustria/v13/9oRONYodvDEyjuhOrC05MtPyAcg.woff2`,weight:`400`}]}],i=[`.framer-y6S4J .framer-styles-preset-8m3hym:not(.rich-text-wrapper), .framer-y6S4J .framer-styles-preset-8m3hym.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 100px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.05em; --framer-line-height: 110%; --framer-paragraph-spacing: 40px; --framer-text-alignment: center; --framer-text-color: #3b3b3b; --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; }`,`@media (max-width: 1399px) and (min-width: 1200px) { .framer-y6S4J .framer-styles-preset-8m3hym:not(.rich-text-wrapper), .framer-y6S4J .framer-styles-preset-8m3hym.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 82px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.05em; --framer-line-height: 110%; --framer-paragraph-spacing: 40px; --framer-text-alignment: center; --framer-text-color: #3b3b3b; --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,`@media (max-width: 1199px) and (min-width: 768px) { .framer-y6S4J .framer-styles-preset-8m3hym:not(.rich-text-wrapper), .framer-y6S4J .framer-styles-preset-8m3hym.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 64px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.05em; --framer-line-height: 110%; --framer-paragraph-spacing: 40px; --framer-text-alignment: center; --framer-text-color: #3b3b3b; --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,`@media (max-width: 767px) and (min-width: 0px) { .framer-y6S4J .framer-styles-preset-8m3hym:not(.rich-text-wrapper), .framer-y6S4J .framer-styles-preset-8m3hym.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 52px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.05em; --framer-line-height: 110%; --framer-paragraph-spacing: 40px; --framer-text-alignment: center; --framer-text-color: #3b3b3b; --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`],a=`framer-y6S4J`}));export{o as i,i as n,r,a as t};
+import { t as e } from "./rolldown-runtime.Bawp8BQ-.mjs";
+import { H as t, O as n } from "./framer.Dbwxx7XS.mjs";
+var r,
+  i,
+  a,
+  o = e(() => {
+    (t(),
+      n.loadFonts([`GF;Lustria-regular`]),
+      (r = [
+        {
+          explicitInter: !0,
+          fonts: [
+            {
+              family: `Lustria`,
+              source: `google`,
+              style: `normal`,
+              url: `https://fonts.gstatic.com/s/lustria/v13/9oRONYodvDEyjuhOrC05MtPyAcg.woff2`,
+              weight: `400`,
+            },
+          ],
+        },
+      ]),
+      (i = [
+        `.framer-y6S4J .framer-styles-preset-8m3hym:not(.rich-text-wrapper), .framer-y6S4J .framer-styles-preset-8m3hym.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 100px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.05em; --framer-line-height: 110%; --framer-paragraph-spacing: 40px; --framer-text-alignment: center; --framer-text-color: #3b3b3b; --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; }`,
+        `@media (max-width: 1399px) and (min-width: 1200px) { .framer-y6S4J .framer-styles-preset-8m3hym:not(.rich-text-wrapper), .framer-y6S4J .framer-styles-preset-8m3hym.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 82px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.05em; --framer-line-height: 110%; --framer-paragraph-spacing: 40px; --framer-text-alignment: center; --framer-text-color: #3b3b3b; --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,
+        `@media (max-width: 1199px) and (min-width: 768px) { .framer-y6S4J .framer-styles-preset-8m3hym:not(.rich-text-wrapper), .framer-y6S4J .framer-styles-preset-8m3hym.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 64px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.05em; --framer-line-height: 110%; --framer-paragraph-spacing: 40px; --framer-text-alignment: center; --framer-text-color: #3b3b3b; --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,
+        `@media (max-width: 767px) and (min-width: 0px) { .framer-y6S4J .framer-styles-preset-8m3hym:not(.rich-text-wrapper), .framer-y6S4J .framer-styles-preset-8m3hym.rich-text-wrapper h1 { --framer-font-family: "Lustria", "Lustria Placeholder", serif; --framer-font-open-type-features: normal; --framer-font-size: 52px; --framer-font-style: normal; --framer-font-weight: 400; --framer-letter-spacing: -0.05em; --framer-line-height: 110%; --framer-paragraph-spacing: 40px; --framer-text-alignment: center; --framer-text-color: #3b3b3b; --framer-text-decoration: none; --framer-text-stroke-color: initial; --framer-text-stroke-width: initial; --framer-text-transform: none; } }`,
+      ]),
+      (a = `framer-y6S4J`));
+  });
+export { o as i, i as n, r, a as t };
 //# sourceMappingURL=HETGTyytP.DAbUeksh.mjs.map
